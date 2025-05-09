@@ -1,0 +1,404 @@
+\documentclass{article}
+\usepackage{microtype}
+\usepackage{hanging}
+\usepackage{float}
+\usepackage[text={5.5in,9.5in},centering]{geometry}
+\usepackage{csquotes}
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+
+\usepackage[compact]{titlesec}
+\usepackage{graphicx}
+
+
+\usepackage{fontspec}
+\defaultfontfeatures{Scale=MatchLowercase}
+\setmainfont[Ligatures=TeX]{PT Sans}
+
+% configuring the titlesec package for fancyier section heads
+\renewcommand \thesection{\Roman{section}}
+\renewcommand \thesubsection{}
+\renewcommand \thesubsubsection{}
+
+% tighter spacing between headers and text
+\titleformat{\section}{\large \bf}{\thesection}{8pt}{}
+\titleformat{\subsection}{\small \bf \it}{\thesubsection}{8pt}{}
+\titleformat{\subsubsection}{\normalsize
+  \bf}{\thesubsubsection}{8pt}{}
+
+\titlespacing{\section}{0pt}{22pt}{8pt}
+\titlespacing{\subsection}{0pt}{16pt}{6pt}
+\titlespacing{\subsubsection}{-8pt}{*1}{8pt}
+
+% biblatex and biber are much better for humanities citations
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber]{biblatex-chicago}
+\bibliography{ccs-readings}
+
+% very complicated code for correctly citing danah boyd, since Paperpile cannot handle lowercase author names
+\DeclareSourcemap{
+  \maps[datatype = bibtex, overwrite]{
+    \map[]{
+       \step[fieldsource = author,
+          match = {Boyd, Danah},
+          replace = {danah boyd}]
+    }
+  }
+}
+
+% working around the way Paperpile encodes language info
+\usepackage[english]{babel}
+\DeclareRedundantLanguages{en}{english,american,british,
+  canadian,australian,newzealand,USenglish,UKenglish}
+
+% marginnote allows me to post meeting dates in the margins
+\usepackage{marginnote}
+\reversemarginpar
+% \sideparswitchtrue
+% \setmarginnotes{1em}{1in}{1em}
+\renewcommand{\marginnotevadjust}{-0.3in}
+\renewcommand*{\raggedleftmarginnote}{}
+\setlength{\parindent}{0cm}
+
+% advdate allows me to format dates the way I want
+\usepackage{advdate}
+\usepackage[ddmmyyyy]{datetime}
+\newdateformat{syldate}{\monthname\ \THEDAY}
+\newdateformat{verdate}{\THEMONTH-\THEDAY-\THEYEAR}
+
+% custom counters to automatically generate meeting dates
+\newcounter{week}
+\newcounter{lecture}
+% make \thelecture print Lecture X, with 0-padding for lectures 1-9
+\renewcommand\thelecture{%
+  \ifnum\value{lecture}<10\relax0\fi}
+
+\newcount\lectureoffset% TeX counters are more convenient
+\newcommand{\nextlec}{%
+  \AdvanceDate[\lectureoffset]% increase offset by 2 or 5 (initially 0)
+  \refstepcounter{lecture}% increment the lecture number
+  \refstepcounter{week}%
+  \lectureoffset=7
+  }
+
+% custom environment for readings (allows for hanging indent in citations)
+\newenvironment{reading}
+{\hangindent=0.5cm \begin{flushleft} \begin{small} }
+{ \end{small} \end{flushleft}}
+
+% custom environment for supplemental readings (no hang)
+\newenvironment{optional}
+{\begin{flushleft} \begin{small}
+      Supplemental reading(s)/reports:\\ \vspace{0.1in} }
+    { \end{small} \end{flushleft} \vspace{-0.1in}}
+
+
+\begin{document}
+
+\begin{center}
+  \Huge{\textbf{CCS  Independent Reading List}}\\
+  \Large{INFO I698 \textbullet \ \ Spring 2025}
+\vspace{0.2in}
+\end{center}
+
+This reading list is intended to help students in the Computing, Culture, and Society track of the Informatics department to prepare for their qualifying exams.  It covers literature that sits at the intersection of STS (Science and Technology Studies) and Social Informatics.\\
+
+Dr.\ Nathan Ensmenger\\
+Monday 9:10am-11:30am, Myles Brand 232W
+
+  
+Document revision: \verdate{\today}
+
+%... Set the first meeting date
+\ThisYear{2025}
+\ThisMonth{1}
+\ThisDay{13}
+
+\setcounter{week}{0} %initialize at zero
+
+\section{Introduction}%
+\nextlec %update the weekly counter
+\marginnote[\syldate{\today}]{} %note the current meeting date
+
+\begin{reading}
+
+  \fullcite{Kling1999-tw}
+
+  \fullcite{Gieryn1983-jy}
+
+\fullcite{Guice1998-xb}
+\end{reading}
+
+\begin{optional}
+    \fullcite{Olazaran1996-ba}
+\end{optional}
+
+\section{Studying Science}%
+\nextlec
+\marginnote[\syldate{\today}]{}
+
+
+\begin{reading}
+
+  \fullcite[Chapters 1, 2, and 5]{Latour1979-jn}
+
+\fullcite[Chapter 1, "The Prehistory of Science and Technology Studies", and Chapter 5, ``The Strong Programme and the Sociology of Knowledge'']{Sismondo2011-bh}
+\end{reading}
+
+\begin{optional}
+\fullcite{Ensmenger2012-kq}
+\end{optional}
+
+\section{SCOT}%
+\nextlec
+\marginnote[\syldate{\today}]{}
+
+
+
+\begin{reading}
+
+\fullcite[Chapter 5, "The Social Construction of Technology"]{Matthewman2011-hx}
+
+\fullcite[Chapter 2, "King of the Road: The Social Construction of the Safety Bicycle"]{Bijker1997-kl}
+
+\cite{MacKenzie1997-kp}
+
+\end{reading}
+
+\begin{optional}
+  \fullcite{Clayton2002-wi}; \fullcite{Bijker2002-or}; \fullcite{Winner1993-op}; \fullcite{Hughes1990-qn}; \fullcite{Cowan1997-rf}
+\end{optional}
+
+
+\section{ANT}%
+\nextlec
+\marginnote[\syldate{\today}]{}
+
+
+\begin{reading}
+\fullcite[Chapter 6, "The Sociotechnical Construction of Society: Actor-Network Theory"]{Matthewman2011-hx}
+
+\fullcite{Sharifzadeh2022-kd}
+
+\cite{Callon1984-fk};
+
+\end{reading}
+
+\begin{optional}
+\cite{Latour1987-qn}; \fullcite[Chapter 7, "Actor-Network Theory"]{Sismondo2011-bh}; \fullcite{Orr1996-dm}; \cite{Doolin2002-gr}; \cite{MacKenzie2007-hw}; \cite{Boyer2008-pd}; \fullcite{Lagesen2012-bp}; \cite{Amsterdamska1990-si}
+
+
+\end{optional}
+
+
+
+\section{Feminism meets STS}%
+\nextlec
+\marginnote[\syldate{\today}]{}
+
+
+\begin{reading}
+\fullcite[Chapter 7, "Feminist Epistemologies of Science"]{Sismondo2011-bh}
+
+\fullcite{Wajcman2007-mw}
+
+\fullcite{Haraway1991-wf}
+
+\fullcite{Suchman2006-uu}
+\end{reading}
+
+\begin{optional}
+
+ \fullcite{Bardzell2011-ns}
+
+
+\end{optional}
+
+
+\section{Cybernetics}%
+\nextlec
+\marginnote[\syldate{\today}]{}
+
+
+\begin{reading}
+\fullcite{Pickering2010-nu}
+
+\fullcite{Kline2017-fa}
+
+\fullcite{Medina2014-dd}
+\end{reading}
+
+\begin{optional}
+\fullcite{Edwards1997-eq}; \fullcite{Heims1991-oh}; \fullcite{Galison1994-cs}; \fullcite{Bowker1993-oc}; \fullcite{Gerovitch2004-ll}
+\end{optional}
+
+
+\section{Artifacts and Politics}%
+\nextlec
+\marginnote[\syldate{\today}]{}
+
+
+\begin{reading}
+\fullcite{Winner1986-bt}
+
+\fullcite[Chapter 2, "Marx, Modernity, and the Machine" and Chapter 4, "The Politics of Artifacts"]{Matthewman2011-hx}
+
+\fullcite{Alexander2017-hi}: \url{https://slatestarcodex.com/2017/03/16/book-review-seeing-like-a-state/}
+
+\end{reading}
+
+\begin{optional}
+    \fullcite{Wyatt2023-sg}
+\end{optional}
+
+
+\section{Imaginaries}%
+\nextlec
+\marginnote[\syldate{\today}]{}
+
+
+\begin{reading}
+\fullcite{Sismondo2020-ro}
+
+\fullcite{Jasanoff2009-oo}
+
+\fullcite{Park2015-ct}
+\end{reading}
+
+\begin{optional}
+    \fullcite{Jasanoff2015-qa}; \fullcite{Sabanovic2014-bf}
+\end{optional}
+
+
+\section{Affordances; or, how to talk STS in HCI}%
+\nextlec
+\marginnote[\syldate{\today}]{}
+
+\begin{reading}
+    \fullcite{Davis2020-lk}
+\end{reading}
+
+
+
+
+
+\section{Spring Break}
+\nextlec
+\marginnote[\syldate{\today}]{}
+No class.\\  
+
+Literally, in this case, but also figuratively: where is class in STS theory/literature? In the optional readings for this week, you will find a few suggestions.  
+
+\begin{optional}
+\fullcite{Shapin1994-sr}; \fullcite{Amrute2016-rl};\fullcite{Hindmarch-Watson2012-wh};
+\fullcite{Zussman1985-xa}; \fullcite{Boyd2012-kz};
+\fullcite{Noble1984-el}; \fullcite{Secord1994-ty};\fullcite{Gershon2017-pt}; \fullcite{Popan2024-ct}
+
+\end{optional}
+
+
+
+
+\section{Critical Studies, part I}%
+\nextlec
+\marginnote[\syldate{\today}]{}
+
+
+\begin{reading}
+\fullcite{Benjamin2019-ff}
+
+\fullcite{Noble2018-sg}
+
+\fullcite{Nakamura2014-js}
+
+\end{reading}
+
+\begin{optional}
+   \fullcite{Katz2020-sn};  \fullcite{Gates1985-mg}; \cite{Eglash2002-el};\cite{Adas2018-vh}; \cite{Abdilla2020-qe};  \cite{McIlwain2020-ff};\cite{Pellow2002-ie}; \fullcite{Boyd2012-kz}; \cite{Green2000-ec}
+\end{optional}
+
+
+\section{Critical studies, part III}%
+\nextlec
+\marginnote[\syldate{\today}]{}
+
+
+\begin{reading}
+\fullcite{Kleif2003-xy}
+
+\fullcite{Cohn1993-qu}
+
+\fullcite{Zeavin2022-hj}
+\end{reading}
+
+\begin{optional}
+\fullcite{Scott2013-fs}; \fullcite{Meyerowitz2008-yu}; \cite{D-Ignazio2020-pb}; \cite{Monea2022-mp}; \cite{Abbate2019-tf}; \cite{Ensmenger2010-sm}; \cite{Oldenziel1999-ql}; 
+\end{optional}
+
+\section{NO CLASS}
+\nextlec
+\marginnote[\syldate{\today}]{}
+
+
+
+\section{Post-colonial computing}%
+\nextlec
+\marginnote[\syldate{\today}]{}
+
+
+\begin{reading}
+\fullcite{Philip2012-hc}
+
+\fullcite{Whittaker2023-wo}
+
+\fullcite{Radin2017-ia}
+\end{reading}
+
+\begin{optional}
+\fullcite{Penn2023-oq}; \fullcite{Couldry2019-of}; \fullcite{Hecht2014-tf};  \fullcite{Headrick1981-or}
+\end{optional}
+
+%\section{Non-humans and the environment}
+%\nextlec
+%\marginnote[\syldate{\today}]{}
+
+%\begin{reading}
+
+%\cite{Taylor2023-kq}
+
+%\end{reading}
+
+\section{Critical views of STS criticism}%
+\nextlec
+\marginnote[\syldate{\today}]{}
+
+
+\begin{reading}
+\fullcite{Hansson2020-tv}
+
+\fullcite{Woolgar2009-qi}
+
+\fullcite{Mirowski2008-pd}
+\end{reading}
+
+\section{Apply to AI?}
+\nextlec
+\marginnote[\syldate{\today}]{} 
+
+\begin{reading}
+    \fullcite{Messeri2024-qh}
+\end{reading}
+
+
+\section{Big Finish}
+\nextlec
+\marginnote[\syldate{\today}]{}
+
+
+
+\newpage
+\section{Full Bibliography}%
+\nocite{*}
+\printbibliography
+
+\end{document}
